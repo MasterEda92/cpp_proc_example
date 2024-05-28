@@ -15,6 +15,7 @@ void handle_new_command(std::vector<contact_stru *> &arrContacts) {
   new_contact->first_name = get_firstname();
   new_contact->last_name = get_lastname();
   new_contact->age = get_age();
+  new_contact->phone_nr = get_phonenr();
 
   arrContacts.push_back(new_contact);
   std::cout << "Der Kontakt wurde neu angelegt." << std::endl;
@@ -66,6 +67,10 @@ void handle_edit_command(std::vector<contact_stru *> &arrContacts) {
   }
   case 3: {
     arrContacts.at(nNrToEdit - 1)->age = atoi(strNewValue.c_str());
+    break;
+  }
+  case 4: {
+    arrContacts.at(nNrToEdit - 1)->phone_nr = strNewValue;
     break;
   }
   }

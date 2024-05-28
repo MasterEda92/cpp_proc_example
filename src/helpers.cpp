@@ -10,7 +10,8 @@ void list_contacts(std::vector<contact_stru *> &arrContacts) {
     std::cout << "Nr. " << nNr << "; ";
     std::cout << "Vorname: " << it->first_name << "; ";
     std::cout << "Nachname: " << it->last_name << "; ";
-    std::cout << "Alter: " << it->age << std::endl;
+    std::cout << "Alter: " << it->age << "; ";
+    std::cout << "Telefonnummer: " << it->phone_nr << std::endl;
     ++nNr;
   }
   if (arrContacts.size() == 0)
@@ -37,6 +38,13 @@ int get_age() {
   std::getline(std::cin, strAge);
   int nAge = std::stoi(strAge);
   return nAge;
+}
+
+std::string get_phonenr() {
+  std::cout << "Bitte geben Sie die Telefonnummer ein:";
+  std::string phone_nr;
+  std::getline(std::cin, phone_nr);
+  return phone_nr;
 }
 
 int get_contact_index(std::vector<contact_stru *> &arrContacts) {
@@ -66,6 +74,7 @@ int get_field_id() {
   std::cout << "1 - Vorname" << std::endl;
   std::cout << "2 - Nachname" << std::endl;
   std::cout << "3 - Alter" << std::endl;
+  std::cout << "4 - Telefonnummer" << std::endl;
 
   int nFeldId = -1;
   do {
@@ -75,11 +84,11 @@ int get_field_id() {
     if (nFeldId < 1)
       return -1;
 
-    if (nFeldId > 3)
+    if (nFeldId > 4)
       std::cout << "Das eingegebene Feld ist ungültig. Bitte geben Sie eine "
                    "korrekte Nummer ein."
                 << std::endl;
-  } while (nFeldId < 1 && nFeldId > 3);
+  } while (nFeldId < 1 && nFeldId > 4);
 
   return nFeldId;
 }
@@ -96,7 +105,7 @@ contact_stru *get_contact_from_csv_string(std::string strCsv) {
   std::istringstream ss(strCsv);
   std::string token;
 
-  std::string first_name, last_name, age;
+  std::string first_name, last_name, age, phone_nr;
   int nCounter = 0;
   while (std::getline(ss, token, ';')) {
     switch (nCounter) {
@@ -109,6 +118,9 @@ contact_stru *get_contact_from_csv_string(std::string strCsv) {
     case 2:
       age = token;
       break;
+    case 3:
+      phone_nr = token;
+      break;
     default:
       break;
     }
@@ -118,6 +130,7 @@ contact_stru *get_contact_from_csv_string(std::string strCsv) {
   pContact->first_name = first_name;
   pContact->last_name = last_name;
   pContact->age = std::stoi(age);
+  pContact->phone_nr = phone_nr;
 
   return pContact;
 }
@@ -125,7 +138,7 @@ contact_stru *get_contact_from_csv_string(std::string strCsv) {
 std::string get_csv_string_from_contact(contact_stru *pContact) {
   std::ostringstream oss;
   oss << pContact->first_name << ";" << pContact->last_name << ";"
-      << pContact->age;
+      << pContact->age << ";" << pContact->phone_nr;
 
   return oss.str();
 }
