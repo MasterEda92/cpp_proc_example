@@ -10,6 +10,8 @@ void ListCommands() {
   std::cout << "e -> Kontakt bearbeiten" << std::endl;
   std::cout << "h -> Hilfe anzeigen" << std::endl;
   std::cout << "q -> Programm beenden" << std::endl;
+  std::cout << "s -> Kontakte speichern" << std::endl;
+  std::cout << "i -> Kontakte importieren" << std::endl;
 }
 
 int main() {
@@ -44,6 +46,14 @@ int main() {
     }
     case 'h': {
       ListCommands();
+      break;
+    }
+    case 's': {
+      handle_save_command(arrContacts);
+      break;
+    }
+    case 'i': {
+      handle_load_command(arrContacts);
       break;
     }
     case 'q': {

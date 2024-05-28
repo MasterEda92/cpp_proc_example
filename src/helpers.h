@@ -10,3 +10,6 @@ int get_age();
 int get_contact_index(std::vector<contact_stru *> &arrContacts);
 int get_field_id();
 std::string get_new_field_value();
+
+contact_stru *get_contact_from_csv_string(std::string strCsv);
+std::string get_csv_string_from_contact(contact_stru *pContact);

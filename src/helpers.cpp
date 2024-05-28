@@ -1,5 +1,7 @@
 #include "helpers.h"
+#include "contacts_stru.h"
 #include <iostream>
+#include <sstream>
 #include <string>
 
 void list_contacts(std::vector<contact_stru *> &arrContacts) {
@@ -88,4 +90,42 @@ std::string get_new_field_value() {
   std::getline(std::cin, strNewValue);
 
   return strNewValue;
+}
+
+contact_stru *get_contact_from_csv_string(std::string strCsv) {
+  std::istringstream ss(strCsv);
+  std::string token;
+
+  std::string first_name, last_name, age;
+  int nCounter = 0;
+  while (std::getline(ss, token, ';')) {
+    switch (nCounter) {
+    case 0:
+      first_name = token;
+      break;
+    case 1:
+      last_name = token;
+      break;
+    case 2:
+      age = token;
+      break;
+    default:
+      break;
+    }
+    ++nCounter;
+  }
+  contact_stru *pContact = new contact_stru;
+  pContact->first_name = first_name;
+  pContact->last_name = last_name;
+  pContact->age = std::stoi(age);
+
+  return pContact;
+}
+
+std::string get_csv_string_from_contact(contact_stru *pContact) {
+  std::ostringstream oss;
+  oss << pContact->first_name << ";" << pContact->last_name << ";"
+      << pContact->age;
+
+  return oss.str();
 }
