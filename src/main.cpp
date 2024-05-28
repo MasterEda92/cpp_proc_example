@@ -1,11 +1,7 @@
+#include "handlers.h"
 #include <iostream>
 #include <string>
-
-struct contact_stru {
-  std::string first_name;
-  std::string last_name;
-  int age;
-};
+#include <vector>
 
 void ListCommands() {
   std::cout << "l -> Alle Kontakte auflisten" << std::endl;
@@ -16,37 +12,34 @@ void ListCommands() {
   std::cout << "q -> Programm beenden" << std::endl;
 }
 
-void handle_list_command() { std::cout << "List betätigt" << std::endl; }
-void handle_new_command() { std::cout << "New betätigt" << std::endl; }
-void handle_delete_command() { std::cout << "Delete betätigt" << std::endl; }
-void handle_edit_command() { std::cout << "Edit betätigt" << std::endl; }
-
 int main() {
 
   std::cout << "Willkommen zum Kontaktplaner :)" << std::endl
             << "Folende Aktionen können durchgeführt werden:" << std::endl;
   ListCommands();
 
-  bool bBeenden = false;
-  char cInput = '\0';
-  do {
-    std::cin >> cInput;
+  std::vector<contact_stru *> arrContacts;
 
-    switch (cInput) {
+  bool bBeenden = false;
+  do {
+    std::string strInput;
+    std::getline(std::cin, strInput);
+
+    switch (strInput.c_str()[0]) {
     case 'l': {
-      handle_list_command();
+      handle_list_command(arrContacts);
       break;
     }
     case 'n': {
-      handle_new_command();
+      handle_new_command(arrContacts);
       break;
     }
     case 'd': {
-      handle_delete_command();
+      handle_delete_command(arrContacts);
       break;
     }
     case 'e': {
-      handle_edit_command();
+      handle_edit_command(arrContacts);
       break;
     }
     case 'h': {
@@ -60,6 +53,10 @@ int main() {
     }
   } while (!bBeenden);
 
+  // free memory
+  for (auto &it : arrContacts) {
+    delete it;
+  }
   std::cout << "Programm beendet..." << std::endl;
 
   return 0;
